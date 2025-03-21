@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_manager" name="Manager" parent="hr_attendance.menu_hr_attendance_root" sequence="10"/>
+        
+        <menuitem id="menu_biometric_devices" name="Biometric Devices" parent="menu_manager" 
+                  action="hr_biometric_device_act_window" sequence="20"/>
+        
+        <menuitem id="menu_employee_assignment" name="Employee Assignment" parent="menu_manager" 
+                  action="hr_employee_biometric_act_window" sequence="30"/>
+        
+        <menuitem id="menu_biometric_logging" name="Biometric Logging" parent="menu_manager" 
+                  action="zk_attendance_act_window" sequence="40"/>
+
+        <menuitem id="menu_employee" name="Employees" parent="menu_manager"
+                  action="hr.open_view_employee_list_my" sequence="25"/>
+        
+        <menuitem id="menu_cham_cong" name="Chấm công" parent="menu_manager" 
+                  action="action_co_hr_attendance" sequence="50"/>    
+    </data>
+</odoo>

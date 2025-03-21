@@ -1,0 +1,24 @@
+stages:
+  - test
+  - deploy
+test-job:
+  stage: test
+  script:
+    - echo "Test starting ..."
+    - rm -rf /home/odoo/test
+    - runuser -l odoo -c "mkdir /home/odoo/test"
+    - cp -r ./* /home/odoo/test
+    - runuser -l odoo -c "/home/odoo/venv/bin/python /home/odoo/main/odoo-bin -c /home/odoo/config/test.conf --http-port=3069 -i hr_payroll,hr_payroll_attendance,hr_payroll_overtime --stop-after-init"
+    - runuser -l odoo -c "dropdb odoo_test"
+    - echo "Test passed"
+
+deploy-job:
+  stage: deploy
+  rules:
+    - if: ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == "staging")
+  script:
+    - echo "Deploying..."
+    - cp -r ./* /home/odoo/dev/erp14
+    # -c /home/odoo/dev/erp14/odoo.conf
+    - service odoo_erp14 restart
+    - echo "Application successfully deployed."

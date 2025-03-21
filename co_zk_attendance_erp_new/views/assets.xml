@@ -1,0 +1,6 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="co_zk_attendance_erp_new_asset">
+        <script type="text/javascript" src="/co_zk_attendance_erp_new/static/src/js/co_hr_attendance.js"/>
+    </template>
+</odoo> -->

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="co_customer_reject_wizard_view" model="ir.ui.view">
+            <field name="name">co.hr.attendance.wizard.form</field>
+            <field name="model">co.hr.attendance.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Explain Attendance">
+                    <sheet>
+                        <group>
+                            <field name="working_type" widget="radio"/>
+                            <field name="explain_attendance"/>
+                            <field name="first_selfie" widget="image" class="oe_avatar"/>
+                            <field name="second_selfie" widget="image" class="oe_avatar"/>
+                            <field name="third_selfie" widget="image" class="oe_avatar"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Submit" class="oe_highlight" name="submit_checkin" type="object"/>
+                        <!-- <button special="cancel" string="Cancel" name="cancel_checkin" type="object"/> -->
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

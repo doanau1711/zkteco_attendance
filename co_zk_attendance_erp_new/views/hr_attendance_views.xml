@@ -1,0 +1,175 @@
+<odoo>
+    <data>
+
+        <record id="inherited_hr_attendance_view_filter" model="ir.ui.view">
+            <field name="name">inherited_hr_attendance_view_filter</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+            <field name="arch" type="xml">
+                <search string="Hr Attendance Search">
+                    <group expand="0" string="Group By">
+                        <separator/>
+                        <filter name="date" string="Date" context="{'group_by':'check_in:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_co_zk_attendance_search" model="ir.ui.view">
+            <field name="name">co.zk.attendance.search</field>
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <search string="Hr Attendance Search">
+                    <filter icon="terp-stock_align_left_24" string="My Attendance" name="my_attendance"
+                            domain="[('employee_id.user_id.id', '=', uid)]"/>
+                    <separator/>
+                    <filter name="today" string="Today"
+                            domain="[('check_in', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('check_in', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59))]"/>
+                    <filter string="This Month" name="month"
+                            domain="[('check_in', '&gt;=', (datetime.datetime.now().replace(hour=0, minute=0, second=0, day=1) - datetime.timedelta(hours=7)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+
+                    <separator/>
+                    <filter string="Working" name="status"
+                            domain="[('status', '=', 'working')]"/>
+                    <filter string="Out of working" name="status"
+                            domain="[('status', '=', 'out of work')]"/>
+                    <separator/>
+                    <group string="Group By" name="groupby">
+                        <filter
+                                string="Employee"
+                                name="employee_id_groupby"
+                                context="{'group_by': 'employee_id'}"/>
+                        <filter
+                                string="Status"
+                                name="status_id_groupby"
+                                context="{'group_by': 'status'}"/>
+                    </group>
+                    <field name="employee_id" string="Name"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_attendance_tree" model="ir.ui.view">
+            <field name="name">hr.attendance.tree</field>
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <tree string="Employee attendances" create="0" edit="1" editable="bottom" sample="1">
+                    <field name="employee_id"/>
+                    <field name="employee_code" optional="hide"/>
+                    <field name="check_in"/>
+                    <field name="check_in_id" optional="hide"/>
+                    <field name="check_in_date" optional="hide"/>
+                    <field name="check_in_float" widget="float_time" optional="hide"/>
+                    <field name="check_out"/>
+                    <field name="check_out_id" optional="hide"/>
+                    <field name="check_out_date" optional="hide"/>
+                    <field name="check_out_float" widget="float_time" optional="hide"/>
+                    <field name="worked_hours" string="Work Hours" widget="float_time"/>
+                    <field name="attendance_type"/>
+                    <field name="working_type" widget="radio"/>
+                    <field name="explain_attendance"/>
+                    <field name="status" decoration-info="status=='out of work'" decoration-success="status=='working'"
+                           decoration-danger="status=='error'" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_zk_report_daily_attendance" model="ir.actions.act_window">
+            <field name="name">Attendance Analysis</field>
+            <field name="res_model">hr.attendance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5,0,0), (0, 0, {'view_mode': 'tree', 'view_id': ref('view_attendance_tree')})]"/>
+            <field name="context">{'search_default_my_attendance': 1}</field>
+            <field name="search_view_id" ref="view_co_zk_attendance_search"/>
+        </record>
+
+        <!--        <template id="hr_attendance_inherit" inherit_id="hr_attendance.HrAttendanceMyMainMenu">-->
+        <!--            <xpath expr="//div[hasclass('o_hr_attendance_kiosk_mode')]" position="inside">-->
+        <!--                <h4>Hello</h4>-->
+        <!--            </xpath>-->
+        <!--        </template>-->
+
+        <record id="view_co_hr_attendance_tree" model="ir.ui.view">
+            <field name="name">hr.attendance.tree</field>
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <tree string="Employee attendances" create="0" sample="1">
+                    <field name="employee_id"/>
+                    <field name="employee_code" optional="hide"/>
+                    <field name="check_in"/>
+                    <field name="check_in_id" optional="hide"/>
+                    <field name="check_in_date" optional="hide"/>
+                    <field name="check_in_float" widget="float_time" optional="hide"/>
+                    <field name="check_out"/>
+                    <field name="check_out_id" optional="hide"/>
+                    <field name="check_out_date" optional="hide"/>
+                    <field name="check_out_float" widget="float_time" optional="hide"/>
+                    <field name="worked_hours" string="Work Hours" widget="float_time"/>
+                    <field name="attendance_type"/>
+                    <field name="working_type" widget="radio"/>
+                    <field name="explain_attendance"/>
+                    <field name="status" decoration-info="status=='out of work'" decoration-success="status=='working'"
+                           decoration-danger="status=='error'" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_co_hr_attendance_form" model="ir.ui.view">
+            <field name="name">hr.attendance.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Employee attendances" create="0" edit="0">
+                    <header>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="employee_code"/>
+                                <field name="check_in"/>
+                                <field name="check_out"/>
+                                <field name="worked_hours" string="Work Hours" widget="float_time"/>
+                                <field name="attendance_type"/>
+                                <field name="working_type" widget="radio"/>
+                            </group>
+                            <group>
+                                <field name="first_selfie" widget="image" class="oe_avatar"/>
+                                <field name="second_selfie" widget="image" class="oe_avatar"/>
+                                <field name="third_selfie" widget="image" class="oe_avatar"/>
+                                <field name="explain_attendance"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_co_hr_attendance" model="ir.actions.act_window">
+            <field name="name">Attendance Analysis</field>
+            <field name="res_model">hr.attendance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_co_hr_attendance_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_co_hr_attendance_form')})]"/>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_co_zk_attendance_search"/>
+        </record>
+
+        <!-- <menuitem id="hr_attendance.menu_hr_attendance_view_attendances"
+                  name="Attendances"
+                  action="action_zk_report_daily_attendance"
+                   parent="hr_attendance.menu_hr_attendance_root"
+                  groups="hr_attendance.group_hr_attendance_manager"/> -->
+
+        <!-- <menuitem id="menu_co_hr_attendance"
+                  name="Chấm Công"
+                  action="action_co_hr_attendance"
+                  parent="hr_attendance.menu_hr_attendance_root"
+                  groups="hr_attendance.group_hr_attendance_manager"
+                  sequence="15"/> -->
+
+    </data>
+</odoo>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--        <record id="co_hr_attendance_zk_form_view" model="ir.ui.view">-->
+<!--            <field name="name">co_zkteco.co_hr_attendance_zk.form</field>-->
+<!--            <field name="model">co.hr.attendance.zk</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form string="Hr Attendance Zk">-->
+<!--                    <sheet>-->
+<!--                        <div class="oe_title">-->
+<!--                            <label for="example_title"/>-->
+<!--                            <h1>-->
+<!--                                <field name="example_title" placeholder="Title"/>-->
+<!--                            </h1>-->
+<!--                        </div>-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="create_date"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="example_field"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                    </sheet>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="co_hr_attendance_zk_tree_view" model="ir.ui.view">
+            <field name="name">co_zkteco.co_hr_attendance_zk.tree</field>
+            <field name="model">co.hr.attendance.zk</field>
+            <field name="arch" type="xml">
+                <tree string="Hr Attendance Zk">
+                <header>
+                    <button name="import_to_attendance" type="object" string="Import Attendance"/>
+                </header>
+                    <field name="employee_id"/>
+                    <field name="time_stamp"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="co_hr_attendance_zk_search_view" model="ir.ui.view">
+            <field name="name">co_zkteco.co_hr_attendance_zk.search</field>
+            <field name="model">co.hr.attendance.zk</field>
+            <field name="arch" type="xml">
+                <search string="Hr Attendance Zk">
+                    <group expand="1" string="Group By">
+                        <filter string="Time Stamp" name="time_stamp" domain="[]"
+                                context="{'group_by':'time_stamp'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="co_hr_attendance_zk_act_window" model="ir.actions.act_window">
+            <field name="name">Hr Attendance Zk</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">co.hr.attendance.zk</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Hr Attendance Zk.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Hr Attendance Zk" id="co_hr_attendance_zk_menu" parent="hr_attendance.menu_hr_attendance_view_attendances" action="co_hr_attendance_zk_act_window"/>
+
+    </data>
+</odoo>

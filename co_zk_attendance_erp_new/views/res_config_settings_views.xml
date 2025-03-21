@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="ModelName_form_inherit" model="ir.ui.view">
+            <field name="name">ProjectName.ModelName.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" eval="223"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <div class="row mt16 o_settings_container" name="minimum_work_time_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set minimum worked time.">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Minimum hour</span>
+                                <div class="text-muted">
+                                    Enter number of hour to restrict checkout
+                                </div>
+                                <field name="minimum_work_time" widget="float_time"/>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container" name="start_hour_of_day_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set started hour of the day.">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Start hour</span>
+                                <div class="text-muted">
+                                    Enter number hour to start day.
+                                </div>
+                                <field name="start_hour_of_day" widget='float_time'/>
+
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
